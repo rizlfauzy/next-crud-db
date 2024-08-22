@@ -1,0 +1,36 @@
+import moment from 'moment';
+import { getContacts } from '@/utils/contacts';
+import { EditButton, DeleteButton } from '@/components/button';
+
+export default async function Table() {
+  const contatcs = await getContacts();
+  return (
+    <table className="w-full text-sm text-left text-gray-500">
+      <thead className="text-sm text-gray-700 uppercase bg-gray-50">
+        <tr>
+          <th className="py-3 px-6">#</th>
+          <th className="py-3 px-6">Name</th>
+          <th className="py-3 px-6">Phone Number</th>
+          <th className="py-3 px-6">Created At</th>
+          <th className="py-3 px-6 text-center">Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        {contatcs.map((contact, i) => (
+          <tr key={contact.id} className='bg-white border-b'>
+            <td className="py-3 px-6">{i + 1}</td>
+            <td className="py-3 px-6">{contact.name}</td>
+            <td className="py-3 px-6">{contact.phone}</td>
+            <td className="py-3 px-6">{moment(contact.createdAt).format("YYYY-MM-DD HH:mm")}</td>
+            <td>
+              <div className="flex gap-1 items-center justify-center py-3">
+                <EditButton />
+                <DeleteButton />
+              </div>
+            </td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  );
+}
