@@ -1,0 +1,32 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.input_group {
+  align-items: stretch;
+  display: flex;
+  flex-wrap: wrap;
+  position: relative;
+  width: 100%;
+  .place_label {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 2;
+    color: #949494;
+    cursor: text;
+    font-size: 0.8rem;
+    font-style: normal;
+    font-weight: 500;
+    left: 13px;
+    line-height: 1.5;
+  }
+  :is(.form:focus, .form:not(:placeholder-shown)) + .place_label {
+    color: #949494;
+    font-size: .6rem;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 1.5;
+    top: 20%;
+  }
+}
