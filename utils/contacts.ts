@@ -1,8 +1,23 @@
 import { prisma } from "./prisma";
 
-export const getContacts = async () => {
+export const getContacts = async (search:string, current_page:number) => {
   try {
-    return await prisma.contact.findMany();
+    return await prisma.contact.findMany({
+      where: {
+        OR: [
+          { name: { contains: search, mode: "insensitive" } },
+          { phone: { contains: search, mode: "insensitive" } }
+        ]
+      }
+    });
+  } catch (e) {
+    throw new Error("Failed to fetch contacts" + e);
+  }
+};
+
+export const getContactById = async (id: string) => {
+  try {
+    return await prisma.contact.findUnique({ where: { id } });
   } catch (e) {
     throw new Error("Failed to fetch contacts" + e);
   }

@@ -1,15 +1,17 @@
 "use client";
 
-import { SaveContact } from "@/utils/actions";
-import { useState, useCallback, useLayoutEffect, useRef } from "react";
-import { useFormState } from "react-dom";
-import { format_phone_number } from "@/utils/format";
+import { useState, useRef,useCallback, useLayoutEffect } from "react";
 import { SubmitButton } from "@/components/button";
 import Link from "next/link";
+import { format_phone_number } from "@/utils/format";
+import type { Contact } from "@prisma/client";
+import { UpdateContact } from "@/utils/actions";
+import { useFormState } from "react-dom";
 
-export default function CreateForm() {
-  const [contact, setContact] = useState({ name: "", phone: "" });
-  const [state, formAction] = useFormState(SaveContact, null);
+export default function UpdateForm({ cont }: { cont: Contact }) {
+  const updateContactBindId = UpdateContact.bind(null, cont.id);
+  const [state, formAction] = useFormState(updateContactBindId, null);
+  const [contact, setContact] = useState({ name: cont.name, phone: format_phone_number(cont.phone) });
   const input_nama_ref = useRef<HTMLInputElement>(null);
 
   useLayoutEffect(() => {
@@ -60,7 +62,7 @@ export default function CreateForm() {
       <div id="message-error" aria-live="polite" aria-atomic="true">
         <p className="mt-2 text-sm text-red-500">{state?.message}</p>
       </div>
-      <SubmitButton label="save" />
+      <SubmitButton label="update" />
       <Link href="/contacts" className="text-white bg-gray-400 hover:bg-gray-700 font-medium rounded-sm text-sm w-full px-5 py-3 text-center inline-block mt-5">
         Back
       </Link>
