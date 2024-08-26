@@ -5,8 +5,8 @@ export const getContacts = async (search:string, current_page:number) => {
     return await prisma.contact.findMany({
       where: {
         OR: [
-          { name: { contains: search, mode: "insensitive" } },
-          { phone: { contains: search, mode: "insensitive" } }
+          { name: { contains: search.trim(), mode: "insensitive" } },
+          { phone: { contains: search.replace(/[ ]/gi, '').trim(), mode: "insensitive" } }
         ]
       }
     });
