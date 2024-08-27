@@ -1,8 +1,10 @@
 import { CreateButton } from "@/components/button";
 import Search from "@/components/contacts/search";
+import { SkeletonTable } from "@/components/contacts/skeletons";
 import Table from "@/components/contacts/table";
 import Pagination from "@/components/contacts/pagination";
 import { getContactPages } from "@/utils/contacts";
+import { Suspense } from "react";
 
 export default async function Contacts({ searchParams }: { searchParams?: { search?: string; page?: string } }) {
   const search = searchParams?.search || "";
@@ -15,7 +17,9 @@ export default async function Contacts({ searchParams }: { searchParams?: { sear
         <Search />
         <CreateButton />
       </div>
-      <Table search={search} current_page={current_page} />
+      <Suspense key={search + current_page} fallback={<SkeletonTable/>}>
+        <Table search={search} current_page={current_page} />
+      </Suspense>
       <div className="flex justify-center mt-4">
         <Pagination total_pages={total_pages} />
       </div>
