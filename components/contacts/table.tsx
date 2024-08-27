@@ -19,7 +19,7 @@ export default async function Table({ search = '', current_page = 1 }: { search?
       <tbody>
         {contatcs.map((contact, i) => (
           <tr key={contact.id} className="bg-white border-b">
-            <td className="py-3 px-6">{i + 1}</td>
+            <td className="py-3 px-6">{current_page > 1 ? 5 + i + 1 : i + 1}</td>
             <td className="py-3 px-6">{contact.name}</td>
             <td className="py-3 px-6">{format_phone_number(contact.phone)}</td>
             <td className="py-3 px-6">{moment(contact.createdAt).format("YYYY-MM-DD HH:mm")}</td>

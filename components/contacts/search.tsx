@@ -20,6 +20,7 @@ export default function Search() {
 
   const handleSearch = debounce((e: React.ChangeEvent<HTMLInputElement>) => {
     const params = new URLSearchParams(search_params);
+    params.set("page", "1");
     if (e.target.value) params.set("search", e.target.value);
     else params.delete("search");
     replace(`${path}?${params.toString()}`);

@@ -4,6 +4,7 @@ import { HiChevronLeft, HiChevronRight } from "react-icons/hi";
 import { usePathname, useSearchParams } from "next/navigation";
 import { useCallback } from "react";
 import clsx from "clsx";
+import { generatePagination } from "@/utils/generate";
 
 export default function Pagination({ total_pages }: { total_pages: number }) {
   const path = usePathname();
@@ -19,14 +20,14 @@ export default function Pagination({ total_pages }: { total_pages: number }) {
     [path, search_params]
   );
 
-  // const all_pages = generatePagination(current_page, total_pages);
+  const all_pages = generatePagination(current_page, total_pages);
 
   const PaginationNumber = ({ page, href, position, is_active }: { page: number | string; href: string; position?: "first" | "last" | "middle" | "single"; is_active: boolean }) => {
-    const className = clsx(`flex height-10 width-10 items-center justify-center text-sm border`, {
+    const className = clsx(`flex h-10 w-10 items-center justify-center text-sm border`, {
       "rounded-l-sm": position === "first" || position === "single",
       "rounded-r-sm": position === "last" || position === "single",
-      "z-10 bg-blue-100 border-blue-500 text-white": is_active,
-      "hover:bg-gray-100": !is_active && position !== "middle",
+      "z-10 bg-blue-100 border-blue-500 text-slate-800": is_active,
+      "hover:bg-gray-100 hover:text-slate-700": !is_active && position !== "middle",
       "text-gray-300 pointer-events-none": position === "single",
     });
 
@@ -40,9 +41,9 @@ export default function Pagination({ total_pages }: { total_pages: number }) {
   };
 
   const PaginationArrow = ({ href, direction, is_disabled }: { href: string; direction: "left" | "right"; is_disabled?: boolean }): JSX.Element => {
-    const className = clsx(`flex height-10 width-10 items-center justify-center text-sm border`, {
+    const className = clsx(`flex h-10 w-10 items-center justify-center text-sm border`, {
       "pointer-events-none text-gray-300": is_disabled,
-      "hover:bg-gray-100": !is_disabled,
+      "hover:bg-gray-100 hover:text-slate-700": !is_disabled,
       "mr-2": direction === "left",
       "ml-2": direction === "right",
     });
